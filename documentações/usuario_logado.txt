@@ -84,7 +84,7 @@ No HTML/JS puro, controlamos a exibição das telas alternando o CSS `display` (
     <!-- Área exibida quando o usuário NÃO está logado -->
     <div id="areaLogin">
         <h2>Área de Login</h2>
-        <form id="formLogin">
+        <form id="formLogin" onsubmit="fazerLogin(event)">
             <input type="email" id="email" placeholder="E-mail" required>
             <br><br>
             <input type="password" id="senha" placeholder="Senha" required>
@@ -97,7 +97,7 @@ No HTML/JS puro, controlamos a exibição das telas alternando o CSS `display` (
     <div id="areaPainel" style="display: none;">
         <h2>Bem-vindo, <span id="nomeUsuario"></span>!</h2>
         <p>Você está autenticado no sistema.</p>
-        <button id="btnLogout">Sair (Logout)</button>
+        <button id="btnLogout" onclick="fazerLogout()">Sair (Logout)</button>
     </div>
 
     <script>
@@ -108,7 +108,6 @@ No HTML/JS puro, controlamos a exibição das telas alternando o CSS `display` (
         const areaPainel = document.getElementById('areaPainel')
         const nomeUsuarioSpan = document.getElementById('nomeUsuario')
         const formLogin = document.getElementById('formLogin')
-        const btnLogout = document.getElementById('btnLogout')
 
         // Função que verifica se existe usuário salvo no localStorage ao abrir a página
         function verificarSessao() {
@@ -128,8 +127,8 @@ No HTML/JS puro, controlamos a exibição das telas alternando o CSS `display` (
             }
         }
 
-        // Submissão do formulário de Login
-        formLogin.addEventListener('submit', async (e) => {
+        // Submissão do formulário de Login via onsubmit
+        async function fazerLogin(e) {
             e.preventDefault()
 
             const email = document.getElementById('email').value
@@ -154,17 +153,17 @@ No HTML/JS puro, controlamos a exibição das telas alternando o CSS `display` (
             } else {
                 alert(dados.message)
             }
-        })
+        }
 
-        // Ação do Botão de Logout
-        btnLogout.addEventListener('click', () => {
+        // Ação do Botão de Logout via onclick
+        function fazerLogout() {
             // Limpa os dados do localStorage
             localStorage.removeItem('token')
             localStorage.removeItem('usuario')
 
             alert('Você saiu do sistema!')
             verificarSessao() // Atualiza a tela voltando para a interface de login
-        })
+        }
 
         // Executa a verificação assim que a página é carregada
         verificarSessao()

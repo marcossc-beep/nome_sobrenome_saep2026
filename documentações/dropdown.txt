@@ -85,7 +85,7 @@ Preenchemos as opções do `<select>` dinamicamente assim que a página é carre
 <body>
 
     <h2>Cadastrar Produto</h2>
-    <form id="formProduto">
+    <form id="formProduto" onsubmit="cadastrarProduto(event)">
         <input type="text" id="nome" placeholder="Nome do Produto" required>
         <br><br>
         <input type="number" id="preco" step="0.01" placeholder="Preço" required>
@@ -119,8 +119,8 @@ Preenchemos as opções do `<select>` dinamicamente assim que a página é carre
             })
         }
 
-        // Captura o envio do formulário e faz o POST para a API
-        document.getElementById('formProduto').addEventListener('submit', async (e) => {
+        // Submissão do formulário de Cadastro via onsubmit
+        async function cadastrarProduto(e) {
             e.preventDefault()
 
             const nome = document.getElementById('nome').value
@@ -136,7 +136,7 @@ Preenchemos as opções do `<select>` dinamicamente assim que a página é carre
             const dados = await resposta.json()
             alert(dados.message)
             document.getElementById('formProduto').reset()
-        })
+        }
 
         // Executa o carregamento das opções ao abrir a página
         carregarCategorias()

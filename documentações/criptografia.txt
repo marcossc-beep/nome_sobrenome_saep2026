@@ -281,7 +281,7 @@ FRONTEND:
 <body>
 
     <h2>Cadastrar Usuário</h2>
-    <form id="formCadastro">
+    <form id="formCadastro" onsubmit="cadastrarUsuario(event)">
         <input type="text" id="cadNome" placeholder="Nome" required>
         <input type="email" id="cadEmail" placeholder="E-mail" required>
         <input type="password" id="cadSenha" placeholder="Senha" required>
@@ -291,7 +291,7 @@ FRONTEND:
     <hr>
 
     <h2>Login</h2>
-    <form id="formLogin">
+    <form id="formLogin" onsubmit="fazerLogin(event)">
         <input type="email" id="loginEmail" placeholder="E-mail" required>
         <input type="password" id="loginSenha" placeholder="Senha" required>
         <button type="submit">Entrar</button>
@@ -324,7 +324,7 @@ FRONTEND:
             })
         }
 
-        document.getElementById('formCadastro').addEventListener('submit', async (event) => {
+        async function cadastrarUsuario(event) {
             event.preventDefault()
 
             const nome = document.getElementById('cadNome').value
@@ -342,9 +342,9 @@ FRONTEND:
 
             document.getElementById('formCadastro').reset()
             carregarUsuarios()
-        })
+        }
 
-        document.getElementById('formLogin').addEventListener('submit', async (event) => {
+        async function fazerLogin(event) {
             event.preventDefault()
 
             const email = document.getElementById('loginEmail').value
@@ -366,7 +366,7 @@ FRONTEND:
             }
 
             document.getElementById('formLogin').reset()
-        })
+        }
 
         async function deletarUsuario(id) {
             const resposta = await fetch(`${URL}/usuarios/${id}`, {
