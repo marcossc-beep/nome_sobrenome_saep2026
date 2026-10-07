@@ -92,6 +92,28 @@ servidor.post('/login', async (request, reply) => {
 
 })
 
+// Cadastrando usuarrios
+servidor.post('/usuarios', async (request, reply) => {
+// pegando as informações que vieram do body da requisição
+const body = request.body
+
+// validando informações que devem vir no body
+
+    if (!body || !body.nome || !body.email || !body.cpf || !body.senha) {
+        return reply.status(400).send({ message: "nome, email, cpf e senha são obrigatórios!" })
+    }
+
+    // insert na tabela através da api de acordo com as informações que vieram do body
+
+    const resultado = await sql.query(
+        'INSERT INTO usuario (nome, email, cpf, senha, telefone) VALUES ($1, $2, $3, $4, $5)',
+        [body.nome, body.email, body.cpf, body.senha, body.telefone]
+    )
+
+    reply.status(201).send({ message: "usuario cadastrado!" })
+})
+
+
 // ### PUT
 
 // put é usado para alterar algo no servidor então é necessário enviar na requisição o id e o body.
